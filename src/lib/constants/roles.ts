@@ -140,11 +140,11 @@ export const JOB_ROLES: JobDescription[] = [
         ]
     
 
-export function getJobRoleById(id: JobRoleId): JobDescription {
+export function getJobRoleById(id: JobRoleId): JobDescription | undefined {
     return JOB_ROLES.find((role) => role.id === id) as JobDescription
 }
 
-export function getJobByTitle(title: string): JobDescription {
+export function getJobByTitle(title: string): JobDescription | undefined {
     return JOB_ROLES.find((role) => role.title === title) as JobDescription
 }
 

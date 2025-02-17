@@ -1,25 +1,24 @@
-import {User} from "@clerk/nextjs/server"
-import { JobRoleId } from "../constants/roles"
-
+import { User } from "@clerk/nextjs/server";
+import { JobRoleId } from "../constants/roles";
 
 export interface ExtendedUser extends User {
-    intervieweHistory: InterviewSession[];
+    interviewHistory: InterviewSession[];  // Fixed typo
     preferences: UserPreferences;
     lastActivity: Date;
 }
 
 export interface UserPreferences {
     jobRole: JobRoleId;
-    difficulty: "beginner" | "intermediate" | "advanced";
+    difficulty: DifficultyLevel;
 }
 
 export interface InterviewSession {
     jobId: JobRoleId;
     date: Date;
-    id:string;
+    id: string;
     createdAt: Date;
-    difficulty: "beginner" | "intermediate" | "advanced";
-    status: "in-progress" | "completed" | "cancelled";
+    difficulty: DifficultyLevel;
+    status: InterviewStatus;
     duration: number;
     totalQuestions: number;
     currentQuestion: number;
@@ -33,30 +32,49 @@ export interface InterviewQuestion {
 }
 
 export type QuestionCategory = "technical" | "system-design" | "behavioral" | "problem-solving";
-export type QuestionDifficulty = "easy" | "medium" | "hard";
 
-export interface GenerateQuestions{
+export enum QuestionDifficulty {
+    Easy = "easy",
+    Medium = "medium",
+    Hard = "hard",
+}
+
+export enum DifficultyLevel {
+    Beginner = "beginner",
+    Intermediate = "intermediate",
+    Advanced = "advanced",
+}
+
+export enum InterviewStatus {
+    InProgress = "in-progress",
+    Completed = "completed",
+    Cancelled = "cancelled",
+}
+
+export interface GenerateQuestions {
     jobId: JobRoleId;
     category: QuestionCategory;
     difficulty: QuestionDifficulty;
     count: number;
 }
 
-export interface GenerateResponse{
+export interface GenerateResponse {
     questions: InterviewQuestion[];
     success: boolean;
 }
 
 export interface ApiError {
     error: string;
+    code?: number;
+    details?: string;
 }
 
 export type ApiResponse<T> = {
     data: T;
     success: boolean;
     error?: ApiError;
-}
+};
 
 export function isApiError(response: ApiResponse<unknown>): response is ApiResponse<never> {
-    return "error" in response;
+    return !!response.error;
 }
