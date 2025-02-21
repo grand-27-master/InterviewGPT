@@ -12,7 +12,7 @@ export default function Home() {
             Go to Dashboard
           </button>
         </Link>
-        <Link href="/interview">
+        <Link href="app/interview">
           <button className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition">
             Start an Interview
           </button>

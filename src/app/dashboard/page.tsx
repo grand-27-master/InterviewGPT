@@ -1,25 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ExtendedUser, InterviewSession } from "@/lib/types/index";
+import { useSearchParams } from "next/navigation";
+import { ExtendedUser, InterviewSession } from "@/lib/types";
 import { getUserData } from "@/lib/api";
 import Link from "next/link";
 
-export default function Dashboard({ searchParams }: { searchParams: { userId?: string } }) {
+export default function Dashboard() {
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
+
   const [user, setUser] = useState<ExtendedUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!searchParams.userId) {
+      if (!userId) {
         setError("User ID is missing.");
         setLoading(false);
         return;
       }
 
       try {
-        const data = await getUserData(searchParams.userId);
+        const data = await getUserData(userId);
         setUser(data);
       } catch (err) {
         console.error("Failed to fetch user data:", err);
@@ -30,7 +34,7 @@ export default function Dashboard({ searchParams }: { searchParams: { userId?: s
     };
 
     fetchData();
-  }, [searchParams.userId]);
+  }, [userId]);
 
   if (loading) {
     return <p className="text-center text-gray-500">Loading...</p>;
