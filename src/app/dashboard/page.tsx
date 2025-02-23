@@ -84,7 +84,7 @@ export default function Dashboard() {
       </section>
 
       <section className="text-center">
-        <Link href="/interview/role">
+        <Link href="app/interview">
           <button className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
             Start New Interview
           </button>
