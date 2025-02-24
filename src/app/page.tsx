@@ -7,11 +7,6 @@ export default function Home() {
       <p className="text-lg text-gray-700 mb-4">Prepare for your interviews with AI-generated questions.</p>
       
       <div className="flex space-x-4">
-        <Link href="/dashboard">
-          <button className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
-            Go to Dashboard
-          </button>
-        </Link>
         <Link href="/interview">
           <button className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition">
             Start an Interview
